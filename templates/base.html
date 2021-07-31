@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>    
+<html lang="ko">
+
+{% include 'head.html' %}
+
 <body>
-    <h1> Hello World !</h1>
+    {% include 'header.html' %}
+
+    {% block content %}
+    {% endblock %}
+
+    <div style="height: 10rem; background-color: #38df81; border-radius: 1rem; margin: 2rem;">
+
+    </div>
+    <div style="height: 10rem; background-color: #38df81; border-radius: 1rem; margin: 2rem;">
+
+    </div>
+    {% include 'footer.html' %}
+
 </body>
 
 </html>
