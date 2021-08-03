@@ -10,7 +10,7 @@
     <form action="/account/hello_world/" method="post">
         {% csrf_token %}
         <div>
-        <input type="text" name="hello_world_input" value="Type input"> <!-- 부트스트랩 안의 클래스들 중 하나 -->
+        <input type="text" name="hello_world_input" placeholder="Type input"> <!-- 부트스트랩 안의 클래스들 중 하나 -->
         </div>
 
         <div>
@@ -20,9 +20,11 @@
     </form>
 
     {% if hello_world_output %}
-    <h1>
-        {{ hello_world_output.text }}
-    </h1>
+        {% for output in hello_world_output %}
+        <h1>
+            {{ output.text }}
+        </h1>
+        {% endfor %}
     {% endif %}
 
 </div>
