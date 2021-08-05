@@ -7,7 +7,7 @@
     <div class="mb-4">
         <h4> Delete Account </h4>
     </div>
-    <form action="{% url 'accountapp:delete' pk=user.pk%}" method="post">
+    <form action="{% url 'accountapp:delete' pk=target_user.pk%}" method="post">
         {% csrf_token %}
         <!-- AccountCreateView에서 form_class를 지정해주었으므로 가져다가 쓰면 됨 -->
         <input type="submit" class="btn btn-danger rounded-pill col-6 mt-3">
