@@ -3,12 +3,13 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
 
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-
 from accountapp.models import HelloWorld
+from .forms import PasswordUpdateForm
+
 
 # 브라우저에서 어떤 경로로 접속했을 때 보일 html 페이지를 만들 것
 def hello_world(request):
@@ -36,3 +37,9 @@ class AccountDetailView(DetailView):
     model = User
     template_name = 'accountapp/detail.html'
     context_object_name = 'target_user'
+
+class PasswordUpdateView(UpdateView):
+    model = User
+    form_class = PasswordUpdateForm
+    template_name = 'accountapp/update.html'
+    success_url = reverse_lazy('accountapp:hello_world')
