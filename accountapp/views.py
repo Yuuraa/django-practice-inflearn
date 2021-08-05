@@ -1,7 +1,10 @@
+from django.contrib.auth import login
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.models import User
@@ -9,8 +12,12 @@ from django.contrib.auth.forms import UserCreationForm
 
 from accountapp.models import HelloWorld
 from .forms import PasswordUpdateForm
+from .decorators import account_ownership_required
+
+has_ownership = [account_ownership_required, login_required]
 
 
+@login_required
 # 브라우저에서 어떤 경로로 접속했을 때 보일 html 페이지를 만들 것
 def hello_world(request):
     if request.method == "POST":
@@ -27,17 +34,23 @@ def hello_world(request):
         return render(request, 'accountapp/hello_world.html', context={'hello_world_output': hello_world_list})
 
 
+@method_decorator(has_ownership, 'get')
+@method_decorator(has_ownership, 'post')
 class AccountCreateView(CreateView):
     model = User
     form_class = UserCreationForm
     success_url = reverse_lazy('accountapp:hello_world')
     template_name = 'accountapp/create.html'
 
+
 class AccountDetailView(DetailView):
     model = User
     template_name = 'accountapp/detail.html'
     context_object_name = 'target_user'
 
+
+@method_decorator(has_ownership, 'get')
+@method_decorator(has_ownership, 'post')
 class PasswordUpdateView(UpdateView):
     model = User
     form_class = PasswordUpdateForm
@@ -45,6 +58,9 @@ class PasswordUpdateView(UpdateView):
     success_url = reverse_lazy('accountapp:hello_world')
     context_object_name = 'target_user'
 
+
+@method_decorator(has_ownership, 'get')
+@method_decorator(has_ownership, 'post')
 class AccountDeleteView(DeleteView):
     model = User
     template_name = 'accountapp/delete.html'
