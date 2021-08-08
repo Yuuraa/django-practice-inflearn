@@ -24,4 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls), # 기본 기능
     path('accounts/', include('accountapp.urls')),
     path('profiles/', include('profileapp.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # 이미지를 서버가 뱉어내래 수 있도록 해줌
