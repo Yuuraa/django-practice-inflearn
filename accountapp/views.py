@@ -34,8 +34,6 @@ def hello_world(request):
         return render(request, 'accountapp/hello_world.html', context={'hello_world_output': hello_world_list})
 
 
-@method_decorator(has_ownership, 'get')
-@method_decorator(has_ownership, 'post')
 class AccountCreateView(CreateView):
     model = User
     form_class = UserCreationForm
